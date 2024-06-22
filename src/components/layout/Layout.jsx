@@ -19,7 +19,9 @@ const Layout = () => {
         <LeftCol borderDirection="borderTop">
           <Navbar items={NAVBAR} />
         </LeftCol>
-        <RightCol>{Outlet}</RightCol>
+        <RightCol>
+          <Outlet />
+        </RightCol>
       </NavbarContainer>
     </Box>
   );

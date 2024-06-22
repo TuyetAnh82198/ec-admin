@@ -49,3 +49,9 @@ export const NAVBAR = [
     ],
   },
 ];
+const PRODUCTS_PATH = "/products";
+export const API = {
+  PRODUCTS: {
+    ADD: `${PRODUCTS_PATH}/add`,
+  },
+};

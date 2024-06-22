@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { StyledContainer, StyledCategory, StyledNavLink } from "./styled";
 
 const Navbar = ({ items }) => {
-  let abc = 0;
   return (
     <div>
       {items.length > 0 &&
