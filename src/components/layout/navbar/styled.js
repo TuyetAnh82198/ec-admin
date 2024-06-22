@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 export const StyledContainer = styled(Box)({
