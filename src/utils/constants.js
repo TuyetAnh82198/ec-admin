@@ -58,7 +58,6 @@ export const NAVBAR = [
     USER: [
       {
         LOGOUT: {
-          PATH: "javascript:void(0)",
           TITLE: "Logout",
           ICON: <LogoutIcon fontSize="small" />,
         },
@@ -89,5 +88,7 @@ export const API = {
   USER: {
     REGISTER: `${USER_PATH}/register`,
     LOGIN: `${USER_PATH}/login`,
+    CHECK_LOGIN: `${USER_PATH}/check-login`,
+    LOGOUT: `${USER_PATH}/logout`,
   },
 };

@@ -20,3 +20,7 @@ export const StyledIcon = styled("span")({
   marginRight: "0.25rem",
 });
 export const StyledTitle = styled("span")({});
+export const StyledLogout = styled("div")({
+  display: "flex",
+  cursor: "pointer",
+});

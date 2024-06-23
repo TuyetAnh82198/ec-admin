@@ -37,9 +37,15 @@ const Form = ({ pageTitle }) => {
     e.preventDefault();
     const fetchUrl =
       process.env.REACT_APP_SERVER + API.USER[pageTitle.toUpperCase()];
+
     let body = {
       Email: inputs.Email,
       Password: inputs.Password,
+    };
+    let fetchObject = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     };
     if (pageTitle === "Register") {
       body = {
@@ -49,11 +55,10 @@ const Form = ({ pageTitle }) => {
         role: "admin",
       };
     }
-    const fetchObject = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    };
+    if (pageTitle === "Login") {
+      fetchObject = { ...fetchObject, credentials: "include" };
+    }
+
     setIsLoading(true);
     fetch(fetchUrl, fetchObject)
       .then((response) => response.json())
@@ -64,9 +69,16 @@ const Form = ({ pageTitle }) => {
             alert(data.errs);
           } else if (data.msg === "User existing!") {
             alert("User existing!");
+          } else if (data.msg === "Wrong email or password!") {
+            alert("Wrong email or password!");
           } else if (data.msg === "Created!") {
             alert(`${pageTitle} Success!`);
-            pageTitle === "Register" ? navigate("/login") : navigate("/");
+            if (pageTitle === "Register") {
+              navigate("/login");
+            } else {
+              navigate("/");
+              window.location.reload();
+            }
           }
         } else {
           navigate("/server-error");

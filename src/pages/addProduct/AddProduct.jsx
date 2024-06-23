@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
@@ -21,8 +21,22 @@ import {
   StyledImg,
 } from "./styled";
 import { API, PAGE_TITLE } from "../../utils/constants";
+import fetchLogin from "../../utils/fetchLogin";
 
 const AddProduct = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    fetchLogin()
+      .then((loggedInState) => {
+        setIsLoggedIn(loggedInState);
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/login");
+      });
+  }, []);
+
   const inputFields = ["Name", "Price", "Description"];
   const [inputErrs, setInputErrs] = useState(
     Array(inputFields.length).fill({ helperText: "", isErr: false })
@@ -99,7 +113,6 @@ const AddProduct = () => {
     setImageURLs([]);
   };
 
-  const navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
     const { Name, Price, Description } = inputs;
@@ -153,86 +166,92 @@ const AddProduct = () => {
   };
 
   return (
-    <StyledContainer>
-      <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
-        <form onSubmit={submitForm} encType="multipart/form-data">
-          <h3>{PAGE_TITLE.ADD}</h3>
-          {inputFields.map((field, i) => (
-            <TextField
-              key={i}
-              id={field}
-              label={field}
-              name={field}
-              variant="outlined"
-              fullWidth
-              error={inputErrs[i].isErr}
-              helperText={inputErrs[i].helperText}
-              sx={{ marginBottom: "0.5rem" }}
-              multiline
-              rows={field === "Description" ? 3 : 1}
-              required
-              value={inputs[field]}
-              onChange={(e) => handleInputs(e, field)}
-            />
-          ))}
-          <StyledImgBrand container spacing={2}>
-            <StyledUpload item xs={6}>
-              <FormControl fullWidth>
-                <input
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  multiple
-                  name="imgs"
-                  onChange={handleUpload}
+    <>
+      {isLoggedIn && (
+        <StyledContainer>
+          <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
+            <form onSubmit={submitForm} encType="multipart/form-data">
+              <h3>{PAGE_TITLE.ADD}</h3>
+              {inputFields.map((field, i) => (
+                <TextField
+                  key={i}
+                  id={field}
+                  label={field}
+                  name={field}
+                  variant="outlined"
+                  fullWidth
+                  error={inputErrs[i].isErr}
+                  helperText={inputErrs[i].helperText}
+                  sx={{ marginBottom: "0.5rem" }}
+                  multiline
+                  rows={field === "Description" ? 3 : 1}
                   required
-                  ref={imgInput}
+                  value={inputs[field]}
+                  onChange={(e) => handleInputs(e, field)}
                 />
-                <FormHelperText>Upload images (Up to 3 images)</FormHelperText>
-              </FormControl>
-            </StyledUpload>
-            <StyledSelect item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel id="select-brand">Brand</InputLabel>
-                <Select
-                  labelId="select-brand"
-                  value={selectedBrand}
-                  label="Brand"
-                  onChange={handleSelectBrand}
-                  name="Brand"
-                >
-                  {brands.map((brand, i) => (
-                    <MenuItem key={i} value={brand}>
-                      {brand}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </StyledSelect>
-          </StyledImgBrand>
-          {imageURLs.length > 0 && (
-            <StyledUploaded container spacing={2}>
-              {imageURLs.map((url, i) => (
-                <StyledImgContainer item key={i} xs={4}>
-                  <StyledImg src={url} alt="" />
-                </StyledImgContainer>
               ))}
-            </StyledUploaded>
-          )}
-          <Box sx={{ margin: "1rem 0" }}>
-            <Button variant="text" onClick={handleReset}>
-              Reset
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ marginLeft: "0.5rem" }}
-            >
-              Add product
-            </Button>
-          </Box>
-        </form>
-      </StyledForm>
-    </StyledContainer>
+              <StyledImgBrand container spacing={2}>
+                <StyledUpload item xs={6}>
+                  <FormControl fullWidth>
+                    <input
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      multiple
+                      name="imgs"
+                      onChange={handleUpload}
+                      required
+                      ref={imgInput}
+                    />
+                    <FormHelperText>
+                      Upload images (Up to 3 images)
+                    </FormHelperText>
+                  </FormControl>
+                </StyledUpload>
+                <StyledSelect item xs={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id="select-brand">Brand</InputLabel>
+                    <Select
+                      labelId="select-brand"
+                      value={selectedBrand}
+                      label="Brand"
+                      onChange={handleSelectBrand}
+                      name="Brand"
+                    >
+                      {brands.map((brand, i) => (
+                        <MenuItem key={i} value={brand}>
+                          {brand}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </StyledSelect>
+              </StyledImgBrand>
+              {imageURLs.length > 0 && (
+                <StyledUploaded container spacing={2}>
+                  {imageURLs.map((url, i) => (
+                    <StyledImgContainer item key={i} xs={4}>
+                      <StyledImg src={url} alt="" />
+                    </StyledImgContainer>
+                  ))}
+                </StyledUploaded>
+              )}
+              <Box sx={{ margin: "1rem 0" }}>
+                <Button variant="text" onClick={handleReset}>
+                  Reset
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ marginLeft: "0.5rem" }}
+                >
+                  Add product
+                </Button>
+              </Box>
+            </form>
+          </StyledForm>
+        </StyledContainer>
+      )}
+    </>
   );
 };
 
