@@ -1,3 +1,11 @@
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ChatIcon from "@mui/icons-material/Chat";
+import WatchIcon from "@mui/icons-material/Watch";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LoginIcon from "@mui/icons-material/Login";
+
 export const PAGE_TITLE = {
   ADMIN_PAGE: "Admin Page",
   ADD: "Add a product",
@@ -10,14 +18,16 @@ export const NAVBAR = [
     MAIN: [
       {
         DASHBOARD: {
+          PATH: "/",
           TITLE: "Dashboard",
-          ICON: "Z",
+          ICON: <DashboardIcon fontSize="small" />,
         },
       },
       {
         CHAT: {
+          PATH: "/chat",
           TITLE: "Chat",
-          ICON: "Z",
+          ICON: <ChatIcon fontSize="small" />,
         },
       },
     ],
@@ -26,8 +36,9 @@ export const NAVBAR = [
     LISTS: [
       {
         PRODUCTS: {
+          PATH: "/products",
           TITLE: "Products",
-          ICON: "Z",
+          ICON: <WatchIcon fontSize="small" />,
         },
       },
     ],
@@ -36,8 +47,9 @@ export const NAVBAR = [
     NEW: [
       {
         ADD_PRODUCT: {
+          PATH: "/product/add",
           TITLE: "Add a product",
-          ICON: "Z",
+          ICON: <PlaylistAddIcon fontSize="small" />,
         },
       },
     ],
@@ -46,8 +58,23 @@ export const NAVBAR = [
     USER: [
       {
         LOGOUT: {
+          PATH: "javascript:void(0)",
           TITLE: "Logout",
-          ICON: "Z",
+          ICON: <LogoutIcon fontSize="small" />,
+        },
+      },
+      {
+        REGISTER: {
+          PATH: "/register",
+          TITLE: "Register",
+          ICON: <HowToRegIcon fontSize="small" />,
+        },
+      },
+      {
+        LOGIN: {
+          PATH: "/login",
+          TITLE: "Login",
+          ICON: <LoginIcon fontSize="small" />,
         },
       },
     ],
@@ -61,5 +88,6 @@ export const API = {
   },
   USER: {
     REGISTER: `${USER_PATH}/register`,
+    LOGIN: `${USER_PATH}/login`,
   },
 };

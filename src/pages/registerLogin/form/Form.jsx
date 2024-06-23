@@ -5,8 +5,10 @@ import { TextField, Button } from "@mui/material";
 
 import { StyledForm, StyledContainer } from "./styled";
 import { API } from "../../../utils/constants";
+import CirProgress from "../../../components/layout/circularProgress/CircularProgress";
 
 const Form = ({ pageTitle }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [inputFields, setInputFields] = useState(["Email", "Password"]);
   const [inputs, setInputs] = useState({
     Email: "",
@@ -38,13 +40,13 @@ const Form = ({ pageTitle }) => {
     let body = {
       Email: inputs.Email,
       Password: inputs.Password,
-      role: "admin",
     };
     if (pageTitle === "Register") {
       body = {
         ...body,
         Fullname: inputs.Fullname,
         Phone: inputs.Phone,
+        role: "admin",
       };
     }
     const fetchObject = {
@@ -52,9 +54,11 @@ const Form = ({ pageTitle }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     };
+    setIsLoading(true);
     fetch(fetchUrl, fetchObject)
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         if (!data.err) {
           if (data.errs) {
             alert(data.errs);
@@ -62,7 +66,7 @@ const Form = ({ pageTitle }) => {
             alert("User existing!");
           } else if (data.msg === "Created!") {
             alert(`${pageTitle} Success!`);
-            navigate(pageTitle === "Register" ? "/login" : "/");
+            pageTitle === "Register" ? navigate("/login") : navigate("/");
           }
         } else {
           navigate("/server-error");
@@ -71,33 +75,37 @@ const Form = ({ pageTitle }) => {
       .catch((err) => console.log(err));
   };
   return (
-    <StyledContainer>
-      <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
-        <form onSubmit={submitForm}>
-          <h3>{pageTitle}</h3>
-          {inputFields.map((field, i) => (
-            <TextField
-              key={i}
-              id={field}
-              type={field === "Password" ? "password" : "text"}
-              label={field}
-              name={field}
-              variant="outlined"
-              fullWidth
-              sx={{
-                marginBottom: i === inputFields.length - 1 ? "1rem" : "0.5rem",
-              }}
-              required
-              value={inputs[field]}
-              onChange={(e) => handleInputs(e, field)}
-            />
-          ))}
-          <Button type="submit" variant="contained">
-            {pageTitle}
-          </Button>
-        </form>
-      </StyledForm>
-    </StyledContainer>
+    <>
+      {isLoading && <CirProgress />}
+      <StyledContainer>
+        <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
+          <form onSubmit={submitForm}>
+            <h3>{pageTitle}</h3>
+            {inputFields.map((field, i) => (
+              <TextField
+                key={i}
+                id={field}
+                type={field === "Password" ? "password" : "text"}
+                label={field}
+                name={field}
+                variant="outlined"
+                fullWidth
+                sx={{
+                  marginBottom:
+                    i === inputFields.length - 1 ? "1rem" : "0.5rem",
+                }}
+                required
+                value={inputs[field]}
+                onChange={(e) => handleInputs(e, field)}
+              />
+            ))}
+            <Button type="submit" variant="contained">
+              {pageTitle}
+            </Button>
+          </form>
+        </StyledForm>
+      </StyledContainer>
+    </>
   );
 };
 

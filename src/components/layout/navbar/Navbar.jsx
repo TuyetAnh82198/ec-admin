@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 
-import { StyledContainer, StyledCategory, StyledNavLink } from "./styled";
+import {
+  StyledContainer,
+  StyledCategory,
+  StyledNavLink,
+  StyledIcon,
+  StyledTitle,
+} from "./styled";
 
 const Navbar = ({ items }) => {
   return (
@@ -14,9 +20,15 @@ const Navbar = ({ items }) => {
               {item[category].map((subItem, subIndex) => {
                 const subCategory = Object.keys(subItem)[0];
                 return (
-                  <StyledNavLink key={subIndex}>
-                    <span>{subItem[subCategory].ICON} </span>
-                    <span>{subItem[subCategory].TITLE}</span>
+                  <StyledNavLink
+                    to={subItem[subCategory].PATH}
+                    key={subIndex}
+                    style={({ isActive }) => {
+                      return { backgroundColor: isActive && "#F5F5F5" };
+                    }}
+                  >
+                    <StyledIcon>{subItem[subCategory].ICON}</StyledIcon>
+                    <StyledTitle>{subItem[subCategory].TITLE}</StyledTitle>
                   </StyledNavLink>
                 );
               })}

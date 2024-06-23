@@ -12,6 +12,11 @@ export const StyledCategory = styled("h4")({
 export const StyledNavLink = styled(NavLink)({
   textDecoration: "none",
   color: "black",
-  display: "block",
+  display: "flex",
   cursor: "pointer",
 });
+export const StyledIcon = styled("span")({
+  display: "inline-block",
+  marginRight: "0.25rem",
+});
+export const StyledTitle = styled("span")({});
