@@ -7,7 +7,7 @@ export const StyledContainer = styled(Box)({
   justifyContent: "space-around",
 });
 export const StyledForm = styled(Box)({});
-export const StyledImgCategory = styled(Grid)({});
+export const StyledImgBrand = styled(Grid)({});
 export const StyledUpload = styled(Grid)({});
 export const StyledSelect = styled(Grid)({});
 export const StyledUploaded = styled(Grid)({

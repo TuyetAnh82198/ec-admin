@@ -1,5 +1,9 @@
 export const PAGE_TITLE = {
   ADMIN_PAGE: "Admin Page",
+  ADD: "Add a product",
+  UPDATE: "Update product",
+  REGISTER: "Register",
+  LOGIN: "Login",
 };
 export const NAVBAR = [
   {
@@ -50,8 +54,12 @@ export const NAVBAR = [
   },
 ];
 const PRODUCTS_PATH = "/products";
+const USER_PATH = "/user";
 export const API = {
   PRODUCTS: {
     ADD: `${PRODUCTS_PATH}/add`,
+  },
+  USER: {
+    REGISTER: `${USER_PATH}/register`,
   },
 };

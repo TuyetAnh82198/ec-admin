@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   FormControl,
@@ -12,31 +13,30 @@ import {
 import {
   StyledContainer,
   StyledForm,
-  StyledImgCategory,
+  StyledImgBrand,
   StyledUpload,
   StyledSelect,
   StyledUploaded,
   StyledImgContainer,
   StyledImg,
 } from "./styled";
-import { API } from "../../utils/constants";
+import { API, PAGE_TITLE } from "../../utils/constants";
 
 const AddProduct = () => {
-  // console.log(API.PRODUCTS.ADD);
   const inputFields = ["Name", "Price", "Description"];
   const [inputErrs, setInputErrs] = useState(
     Array(inputFields.length).fill({ helperText: "", isErr: false })
   );
-  const [categories, setCategories] = useState([
-    "Earrings",
-    "Necklaces",
-    "Bangles",
-    "Rings",
-    "Bracelets",
-    "Charms",
+  const [brands, setBrands] = useState([
+    "Silvana",
+    "Jowissa",
+    "Kenneth Cole",
+    "Michael Kors",
+    "Orient",
+    "Skagen",
   ]);
   const [imageURLs, setImageURLs] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Earrings");
+  const [selectedBrand, setSelectedBrand] = useState(brands[0]);
   const [inputs, setInputs] = useState({
     Name: "",
     Price: "",
@@ -50,63 +50,113 @@ const AddProduct = () => {
     });
   };
 
-  const handleSelectCategory = (e) => {
-    setSelectedCategory(e.target.value);
+  const handleSelectBrand = (e) => {
+    setSelectedBrand(e.target.value);
   };
 
   const handleUpload = (e) => {
     const files = e.target.files;
     const urls = [];
-    const maxUploadImgs = 3;
+    // const maxUploadImgs = 3;
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.onload = () => {
         urls.push(reader.result);
-        if (urls.length === maxUploadImgs) {
-          setImageURLs(urls);
-        }
+        setImageURLs(urls);
       };
     }
   };
 
+  let inValidName, inValidPrice, inValidDesc;
+  const handleInputErr = (index, message, boolean) => {
+    setInputErrs((prev) => {
+      const newInputErrs = [...prev];
+      newInputErrs[index] = {
+        helperText: message,
+        isErr: boolean,
+      };
+      return newInputErrs;
+    });
+    if (index === 0) {
+      inValidName = boolean;
+    }
+    if (index === 1) {
+      inValidPrice = boolean;
+    }
+    if (index === 2) {
+      inValidDesc = boolean;
+    }
+  };
+
+  const handleReset = () => {
+    setInputs((prev) => {
+      return { ...prev, Name: "", Price: "", Description: "" };
+    });
+    setSelectedBrand(brands[0]);
+    imgInput.current.value = "";
+    imgInput.current.files = null;
+    setImageURLs([]);
+  };
+
+  const navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    formData.append("Name", inputs.Name);
-    formData.append("Price", inputs.Price);
-    formData.append("Description", inputs.Description);
-    formData.append("Category", selectedCategory);
-    for (let i = 0; i < 3; i++) {
-      formData.append("imgs", imgInput.current.files[i], `file${i}`);
+    const { Name, Price, Description } = inputs;
+    if (Name.trim().length === 0) {
+      handleInputErr(0, "Please enter a valid name", true);
+    } else {
+      handleInputErr(0, "", false);
     }
-    console.log(formData);
-    // fetch(`${process.env.REACT_APP_BACKEND}/products/add`, {
-    //   method: "POST",
-    //   credentials: "include",
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (!data.err) {
-    //       if (data.message === "Added!") {
-    //         alert("Added!");
-    //         navigate("/products");
-    //       }
-    //     } else {
-    //       navigate("/server-error");
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
-    // }
+    if (isNaN(Price)) {
+      handleInputErr(1, "Please enter a valid price", true);
+    } else {
+      handleInputErr(1, "", false);
+    }
+    if (Description.trim().length === 0) {
+      handleInputErr(2, "Description cannot be empty", true);
+    } else {
+      handleInputErr(2, "", false);
+    }
+    if (!inValidName && !inValidPrice && !inValidDesc) {
+      const formData = new FormData();
+      formData.append("Name", Name);
+      formData.append("Price", Price);
+      formData.append("Description", Description);
+      formData.append("Brand", selectedBrand);
+      for (let i = 0; i < 3; i++) {
+        if (imgInput.current.files[i]) {
+          formData.append("imgs", imgInput.current.files[i], `file${i}`);
+        } else {
+          break;
+        }
+      }
+      const fetchUrl = process.env.REACT_APP_SERVER + API.PRODUCTS.ADD;
+      const fetchObject = {
+        method: "POST",
+        body: formData,
+      };
+      fetch(fetchUrl, fetchObject)
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.err) {
+            if (data.message === "Added!") {
+              alert("Added!");
+              handleReset();
+            }
+          } else {
+            navigate("/server-error");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
     <StyledContainer>
       <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
         <form onSubmit={submitForm} encType="multipart/form-data">
-          <h3>Add a product</h3>
+          <h3>{PAGE_TITLE.ADD}</h3>
           {inputFields.map((field, i) => (
             <TextField
               key={i}
@@ -125,7 +175,7 @@ const AddProduct = () => {
               onChange={(e) => handleInputs(e, field)}
             />
           ))}
-          <StyledImgCategory container spacing={2}>
+          <StyledImgBrand container spacing={2}>
             <StyledUpload item xs={6}>
               <FormControl fullWidth>
                 <input
@@ -137,28 +187,28 @@ const AddProduct = () => {
                   required
                   ref={imgInput}
                 />
-                <FormHelperText>Upload images (3 images)</FormHelperText>
+                <FormHelperText>Upload images (Up to 3 images)</FormHelperText>
               </FormControl>
             </StyledUpload>
             <StyledSelect item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="select-category">Category</InputLabel>
+                <InputLabel id="select-brand">Brand</InputLabel>
                 <Select
-                  labelId="select-category"
-                  value={selectedCategory}
-                  label="Category"
-                  onChange={handleSelectCategory}
-                  name="Category"
+                  labelId="select-brand"
+                  value={selectedBrand}
+                  label="Brand"
+                  onChange={handleSelectBrand}
+                  name="Brand"
                 >
-                  {categories.map((category, i) => (
-                    <MenuItem key={i} value={category}>
-                      {category}
+                  {brands.map((brand, i) => (
+                    <MenuItem key={i} value={brand}>
+                      {brand}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </StyledSelect>
-          </StyledImgCategory>
+          </StyledImgBrand>
           {imageURLs.length > 0 && (
             <StyledUploaded container spacing={2}>
               {imageURLs.map((url, i) => (
@@ -169,7 +219,9 @@ const AddProduct = () => {
             </StyledUploaded>
           )}
           <Box sx={{ margin: "1rem 0" }}>
-            <Button variant="text">Reset</Button>
+            <Button variant="text" onClick={handleReset}>
+              Reset
+            </Button>
             <Button
               type="submit"
               variant="contained"
