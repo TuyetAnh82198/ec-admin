@@ -6,6 +6,8 @@ import { TextField, Button } from "@mui/material";
 import { StyledForm, StyledContainer } from "./styled";
 import { API } from "../../../utils/constants";
 import CirProgress from "../../../components/layout/circularProgress/CircularProgress";
+import handleResponse from "../../../utils/handleResponse";
+import handleNavigate from "../../../utils/handleNavigate";
 
 const Form = ({ pageTitle }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,23 +67,9 @@ const Form = ({ pageTitle }) => {
       .then((data) => {
         setIsLoading(false);
         if (!data.err) {
-          if (data.errs) {
-            alert(data.errs);
-          } else if (data.msg === "User existing!") {
-            alert("User existing!");
-          } else if (data.msg === "Wrong email or password!") {
-            alert("Wrong email or password!");
-          } else if (data.msg === "Created!") {
-            alert(`${pageTitle} Success!`);
-            if (pageTitle === "Register") {
-              navigate("/login");
-            } else {
-              navigate("/");
-              window.location.reload();
-            }
-          }
+          handleResponse(data, pageTitle, navigate);
         } else {
-          navigate("/server-error");
+          handleNavigate.serverErr(navigate);
         }
       })
       .catch((err) => console.log(err));

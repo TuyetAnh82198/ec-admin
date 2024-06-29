@@ -92,3 +92,18 @@ export const API = {
     LOGOUT: `${USER_PATH}/logout`,
   },
 };
+
+export const RESPONSE_MESSAGES = {
+  REGISTER: {
+    SUCCESS: "Created!",
+    USER_EXISTING: "User existing!",
+  },
+  LOGIN: {
+    SUCCESS: "You are logged in",
+    FAIL: "Wrong email or password!",
+    NOT_LOGIN: "have not been logged in yet",
+  },
+  LOGOUT: {
+    SUCCESS: "You are logged out!",
+  },
+};
