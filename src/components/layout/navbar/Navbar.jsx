@@ -12,7 +12,6 @@ import {
 } from "./styled";
 import fetchLogin from "../../../utils/fetchLogin";
 import { API, RESPONSE_MESSAGES, NAVBAR } from "../../../utils/constants";
-import { Navigate } from "react-router-dom";
 
 const Navbar = ({ items }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,6 +38,10 @@ const Navbar = ({ items }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.msg === RESPONSE_MESSAGES.LOGOUT.SUCCESS) {
+          //deployed by a public suffix
+          const noneFirefox = "noneFirefox";
+          localStorage.removeItem(noneFirefox);
+          //
           alert(RESPONSE_MESSAGES.LOGOUT.SUCCESS);
           navigate(loginPath);
           window.location.reload();

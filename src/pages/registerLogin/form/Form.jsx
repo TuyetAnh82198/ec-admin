@@ -44,11 +44,11 @@ const Form = ({ pageTitle }) => {
       Email: inputs.Email,
       Password: inputs.Password,
     };
-    let fetchObject = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+    let headers = {
+      "Content-Type": "application/json",
     };
+    const isFirefox = navigator.userAgent.includes("Firefox");
+
     if (pageTitle === "Register") {
       body = {
         ...body,
@@ -57,8 +57,21 @@ const Form = ({ pageTitle }) => {
         role: "admin",
       };
     }
+
+    let fetchObject = {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    };
     if (pageTitle === "Login") {
-      fetchObject = { ...fetchObject, credentials: "include" };
+      fetchObject = {
+        ...fetchObject,
+        headers: {
+          ...headers,
+          "X-Browser": isFirefox ? "Firefox" : "Non-Firefox",
+        },
+        credentials: "include",
+      };
     }
 
     setIsLoading(true);

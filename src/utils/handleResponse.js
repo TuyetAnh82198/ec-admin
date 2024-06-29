@@ -19,6 +19,10 @@ const handleResponse = (data, pageTitle, navigate) => {
   } else {
     alert(data.msg);
   }
+  const noneFirefox = "noneFirefox";
+  if (data[noneFirefox] && pageTitle === "Login") {
+    localStorage.setItem(noneFirefox, data[noneFirefox]);
+  }
 };
 
 export default handleResponse;
