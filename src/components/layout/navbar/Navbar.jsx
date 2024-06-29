@@ -11,7 +11,7 @@ import {
   StyledLogout,
 } from "./styled";
 import fetchLogin from "../../../utils/fetchLogin";
-import { API } from "../../../utils/constants";
+import { API, RESPONSE_MESSAGES, NAVBAR } from "../../../utils/constants";
 import { Navigate } from "react-router-dom";
 
 const Navbar = ({ items }) => {
@@ -24,6 +24,10 @@ const Navbar = ({ items }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  const loginPath = NAVBAR.find((item) =>
+    item.hasOwnProperty("USER")
+  ).USER.find((subItem) => subItem.hasOwnProperty("LOGIN")).LOGIN.PATH;
+
   const navigate = useNavigate();
   const handleLogout = () => {
     const fetchUrl = process.env.REACT_APP_SERVER + API.USER.LOGOUT;
@@ -34,9 +38,9 @@ const Navbar = ({ items }) => {
     fetch(fetchUrl, fetchObj)
       .then((response) => response.json())
       .then((data) => {
-        if (data.msg === "You are logged out!") {
-          alert("You are logged out!");
-          navigate("/login");
+        if (data.msg === RESPONSE_MESSAGES.LOGOUT.SUCCESS) {
+          alert(RESPONSE_MESSAGES.LOGOUT.SUCCESS);
+          navigate(loginPath);
           window.location.reload();
         }
       })
