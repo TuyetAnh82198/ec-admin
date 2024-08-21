@@ -5,7 +5,7 @@ import { TextField, Button } from "@mui/material";
 
 import { StyledForm, StyledContainer } from "./styled";
 import { API } from "../../../utils/constants";
-import CirProgress from "../../../components/layout/circularProgress/CircularProgress";
+import CirProgress from "../../../../components/circularProgress/CircularProgress";
 import handleResponse from "../../../utils/handleResponse";
 import handleNavigate from "../../../utils/handleNavigate";
 
