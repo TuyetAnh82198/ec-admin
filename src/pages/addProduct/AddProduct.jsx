@@ -41,9 +41,7 @@ const AddProduct = () => {
   const [inputErrs, setInputErrs] = useState(
     Array(inputFields.length).fill({ helperText: "", isErr: false })
   );
-  const [brands, setBrands] = useState([
-    "ST","ST25"
-  ]);
+  const [brands, setBrands] = useState(["ST", "ST25"]);
   const [imageURLs, setImageURLs] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(brands[0]);
   const [inputs, setInputs] = useState({
@@ -53,15 +51,20 @@ const AddProduct = () => {
   });
   const imgInput = useRef();
 
-  const formatPrice = (value) =>{
-    const number = parseInt(value.replace(/[^\d]/g, ''))
-    if(number)
-    {return number.toLocaleString('vi-VN')}
-    return value
-  }
+  const formatPrice = (value) => {
+    const number = parseInt(value.replace(/[^\d]/g, ""));
+    if (number) {
+      return number.toLocaleString("en-US");
+    }
+    return value;
+  };
   const handleInputs = (e, field) => {
     setInputs((prevInputs) => {
-      return { ...prevInputs, [field]: field==="Price"? formatPrice(e.target.value): e.target.value};
+      return {
+        ...prevInputs,
+        [field]:
+          field === "Price" ? formatPrice(e.target.value) : e.target.value,
+      };
     });
   };
 
@@ -105,7 +108,9 @@ const AddProduct = () => {
   };
 
   const handleReset = () => {
-    setInputErrs(Array(inputFields.length).fill({ helperText: "", isErr: false }))
+    setInputErrs(
+      Array(inputFields.length).fill({ helperText: "", isErr: false })
+    );
     setInputs((prev) => {
       return { ...prev, Name: "", Price: "", Description: "" };
     });
@@ -133,7 +138,8 @@ const AddProduct = () => {
     } else {
       handleInputErr(2, "", false);
     }
-    if (!inValidName && !inValidPrice && !inValidDesc) {console.log(Price)
+    if (!inValidName && !inValidPrice && !inValidDesc) {
+      console.log(Price);
       const formData = new FormData();
       formData.append("Name", Name);
       formData.append("Price", Price);
