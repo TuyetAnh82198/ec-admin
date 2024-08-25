@@ -42,12 +42,7 @@ const AddProduct = () => {
     Array(inputFields.length).fill({ helperText: "", isErr: false })
   );
   const [brands, setBrands] = useState([
-    "Silvana",
-    "Jowissa",
-    "Kenneth Cole",
-    "Michael Kors",
-    "Orient",
-    "Skagen",
+    "ST","ST25"
   ]);
   const [imageURLs, setImageURLs] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(brands[0]);
@@ -58,9 +53,15 @@ const AddProduct = () => {
   });
   const imgInput = useRef();
 
+  const formatPrice = (value) =>{
+    const number = parseInt(value.replace(/[^\d]/g, ''))
+    if(number)
+    {return number.toLocaleString('vi-VN')}
+    return value
+  }
   const handleInputs = (e, field) => {
     setInputs((prevInputs) => {
-      return { ...prevInputs, [field]: e.target.value };
+      return { ...prevInputs, [field]: field==="Price"? formatPrice(e.target.value): e.target.value};
     });
   };
 
@@ -104,6 +105,7 @@ const AddProduct = () => {
   };
 
   const handleReset = () => {
+    setInputErrs(Array(inputFields.length).fill({ helperText: "", isErr: false }))
     setInputs((prev) => {
       return { ...prev, Name: "", Price: "", Description: "" };
     });
@@ -131,7 +133,7 @@ const AddProduct = () => {
     } else {
       handleInputErr(2, "", false);
     }
-    if (!inValidName && !inValidPrice && !inValidDesc) {
+    if (!inValidName && !inValidPrice && !inValidDesc) {console.log(Price)
       const formData = new FormData();
       formData.append("Name", Name);
       formData.append("Price", Price);

@@ -14,6 +14,10 @@ export const StyledNavLink = styled(NavLink)({
   color: "black",
   display: "flex",
   cursor: "pointer",
+  "&:hover": {
+    transform: "scale(1.1)",
+    marginLeft: "0.75rem",
+  },
 });
 export const StyledIcon = styled("span")({
   display: "inline-block",
@@ -23,4 +27,8 @@ export const StyledTitle = styled("span")({});
 export const StyledLogout = styled("div")({
   display: "flex",
   cursor: "pointer",
+  "&:hover": {
+    transform: "scale(1.1)",
+    marginLeft: "0.75rem",
+  },
 });

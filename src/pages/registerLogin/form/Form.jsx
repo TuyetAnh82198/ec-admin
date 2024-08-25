@@ -5,7 +5,7 @@ import { TextField, Button } from "@mui/material";
 
 import { StyledForm, StyledContainer } from "./styled";
 import { API } from "../../../utils/constants";
-import CirProgress from "../../../components/circularProgress/CircularProgress";
+import CirProgress from "../../../components/layout/circularProgress/CircularProgress";
 import handleResponse from "../../../utils/handleResponse";
 import handleNavigate from "../../../utils/handleNavigate";
 
@@ -91,7 +91,7 @@ const Form = ({ pageTitle }) => {
     <>
       {isLoading && <CirProgress />}
       <StyledContainer>
-        <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
+        <StyledForm sx={{ width: { xs: "100%", md: "40%", lg:"30%" } }}>
           <form onSubmit={submitForm}>
             <h3>{pageTitle}</h3>
             {inputFields.map((field, i) => (

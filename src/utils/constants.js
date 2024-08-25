@@ -1,6 +1,6 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChatIcon from "@mui/icons-material/Chat";
-import WatchIcon from "@mui/icons-material/Watch";
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
@@ -38,7 +38,7 @@ export const NAVBAR = [
         PRODUCTS: {
           PATH: "/products",
           TITLE: "Products",
-          ICON: <WatchIcon fontSize="small" />,
+          ICON: <ShoppingBagIcon fontSize="small" />,
         },
       },
     ],
