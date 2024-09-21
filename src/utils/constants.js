@@ -1,10 +1,15 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChatIcon from "@mui/icons-material/Chat";
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LoginIcon from "@mui/icons-material/Login";
+
+export const COLOR = {
+  MAIN_GREEN: "#469E02",
+  DARK_GREEN: "#3D8A00",
+};
 
 export const PAGE_TITLE = {
   ADMIN_PAGE: "Admin Page",
