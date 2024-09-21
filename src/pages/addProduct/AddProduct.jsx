@@ -140,7 +140,6 @@ const AddProduct = () => {
       handleInputErr(2, "", false);
     }
     if (!inValidName && !inValidPrice && !inValidDesc) {
-      console.log(Price);
       const formData = new FormData();
       formData.append("Name", Name);
       formData.append("Price", Price);
