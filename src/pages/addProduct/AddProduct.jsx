@@ -22,6 +22,7 @@ import {
 } from "./styled";
 import { API, PAGE_TITLE } from "../../utils/constants";
 import fetchLogin from "../../utils/fetchLogin";
+import handlePrice from "../../utils/handlePrice";
 
 const AddProduct = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,7 +55,7 @@ const AddProduct = () => {
   const formatPrice = (value) => {
     const number = parseInt(value.replace(/[^\d]/g, ""));
     if (number) {
-      return number.toLocaleString("en-US");
+      return handlePrice(number);
     }
     return value;
   };
@@ -161,7 +162,7 @@ const AddProduct = () => {
         .then((response) => response.json())
         .then((data) => {
           if (!data.err) {
-            if (data.message === "Added!") {
+            if (data.msg === "Added!") {
               alert("Added!");
               handleReset();
             }
