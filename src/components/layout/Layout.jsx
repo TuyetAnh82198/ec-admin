@@ -2,16 +2,25 @@ import { Outlet } from "react-router-dom";
 
 import { Box } from "@mui/material";
 import { LeftCol, RightCol } from "./layout items/layout items";
-import { HeaderContainer, NavbarContainer } from "./styled";
+import {
+  HeaderContainer,
+  NavbarContainer,
+  StyledTitle,
+  StyledImg,
+} from "./styled";
 import { PAGE_TITLE, NAVBAR } from "../../utils/constants";
 import Navbar from "./navbar/Navbar";
+import logo from "../../assets/imgs/icon_border.jpg";
 
 const Layout = () => {
   return (
     <Box>
       <HeaderContainer container>
         <LeftCol borderDirection="borderBottom">
-          <h2 style={{ textAlign: "center" }}>{PAGE_TITLE.ADMIN_PAGE}</h2>
+          <StyledTitle>
+            <StyledImg src={logo} alt="" />
+            {PAGE_TITLE.ADMIN_PAGE}
+          </StyledTitle>
         </LeftCol>
         <RightCol borderDirection="borderBottom"></RightCol>
       </HeaderContainer>
