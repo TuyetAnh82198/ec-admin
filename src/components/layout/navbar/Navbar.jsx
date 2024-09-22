@@ -11,7 +11,7 @@ import {
   StyledLogout,
 } from "./styled";
 import fetchLogin from "../../../utils/fetchLogin";
-import { API, RESPONSE_MESSAGES, NAVBAR } from "../../../utils/constants";
+import { API, RESPONSE_MESSAGES, PAGE_PATH } from "../../../utils/constants";
 
 const Navbar = ({ items }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,10 +22,6 @@ const Navbar = ({ items }) => {
       })
       .catch((err) => {});
   }, []);
-
-  const loginPath = NAVBAR.find((item) =>
-    item.hasOwnProperty("USER")
-  ).USER.find((subItem) => subItem.hasOwnProperty("LOGIN")).LOGIN.PATH;
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -43,7 +39,7 @@ const Navbar = ({ items }) => {
           localStorage.removeItem(noneFirefox);
           //
           alert(RESPONSE_MESSAGES.LOGOUT.SUCCESS);
-          navigate(loginPath);
+          navigate(PAGE_PATH.LOGIN);
           window.location.reload();
         }
       })
