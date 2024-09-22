@@ -20,7 +20,7 @@ const Navbar = ({ items }) => {
       .then((loggedInState) => {
         setIsLoggedIn(loggedInState);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, []);
 
   const loginPath = NAVBAR.find((item) =>
