@@ -1,4 +1,4 @@
-import { API, RESPONSE_MESSAGES } from "./constants";
+import { API, RESPONSE_MESSAGES, LOCAL_STORAGE } from "./constants";
 
 const fetchLogin = () => {
   const fetchUrl = process.env.REACT_APP_SERVER + API.USER.CHECK_LOGIN;
@@ -6,12 +6,22 @@ const fetchLogin = () => {
     method: "POST",
     credentials: "include",
   };
-  const token = localStorage.getItem("noneFirefox");
+
+  let token;
+  const expiry = localStorage.getItem("expiry");
+  const now = new Date();
+  if (now.getTime() > expiry) {
+    localStorage.removeItem("expiry");
+    token = "";
+  } else {
+    token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
+  }
+
   if (token) {
     fetchObj = {
       ...fetchObj,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: token }),
+      body: JSON.stringify({ token }),
     };
   }
   return new Promise((resolve, reject) => {
