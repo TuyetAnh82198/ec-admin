@@ -60,7 +60,7 @@ export const NAVBAR = [
     LISTS: [
       {
         PRODUCTS: {
-          PATH: PAGE_PATH.VIEW,
+          PATH: PAGE_PATH.PRODUCTS.VIEW,
           TITLE: "Products",
           ICON: <ShoppingBagIcon fontSize="small" />,
         },
@@ -71,7 +71,7 @@ export const NAVBAR = [
     NEW: [
       {
         ADD_PRODUCT: {
-          PATH: PAGE_PATH.ADD,
+          PATH: PAGE_PATH.PRODUCTS.ADD,
           TITLE: "Add a product",
           ICON: <PlaylistAddIcon fontSize="small" />,
         },
