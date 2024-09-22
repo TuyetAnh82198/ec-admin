@@ -22,19 +22,34 @@ export const PAGE_TITLE = {
   REGISTER: "Register",
   LOGIN: "Login",
 };
+
+export const PAGE_PATH = {
+  HOMEPAGE: "/",
+  REGISTER: "/register",
+  LOGIN: "/login",
+  CHAT: "/chat",
+  PRODUCTS: {
+    VIEW: "/products",
+    ADD: "/products/add",
+  },
+  // SERVER_ERROR: "/server-error",
+  // HISTORY: "/history",
+  // HISTORY_DETAIL: "/history-detail/:id",
+};
+
 export const NAVBAR = [
   {
     MAIN: [
       {
         DASHBOARD: {
-          PATH: "/",
+          PATH: PAGE_PATH.HOMEPAGE,
           TITLE: "Dashboard",
           ICON: <DashboardIcon fontSize="small" />,
         },
       },
       {
         CHAT: {
-          PATH: "/chat",
+          PATH: PAGE_PATH.CHAT,
           TITLE: "Chat",
           ICON: <ChatIcon fontSize="small" />,
         },
@@ -45,7 +60,7 @@ export const NAVBAR = [
     LISTS: [
       {
         PRODUCTS: {
-          PATH: "/products",
+          PATH: PAGE_PATH.VIEW,
           TITLE: "Products",
           ICON: <ShoppingBagIcon fontSize="small" />,
         },
@@ -56,7 +71,7 @@ export const NAVBAR = [
     NEW: [
       {
         ADD_PRODUCT: {
-          PATH: "/product/add",
+          PATH: PAGE_PATH.ADD,
           TITLE: "Add a product",
           ICON: <PlaylistAddIcon fontSize="small" />,
         },
@@ -73,14 +88,14 @@ export const NAVBAR = [
       },
       {
         REGISTER: {
-          PATH: "/register",
+          PATH: PAGE_PATH.REGISTER,
           TITLE: "Register",
           ICON: <HowToRegIcon fontSize="small" />,
         },
       },
       {
         LOGIN: {
-          PATH: "/login",
+          PATH: PAGE_PATH.LOGIN,
           TITLE: "Login",
           ICON: <LoginIcon fontSize="small" />,
         },

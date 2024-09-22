@@ -1,5 +1,9 @@
-import { RESPONSE_MESSAGES, PAGE_TITLE, LOCAL_STORAGE } from "./constants";
-import { handlePath } from "./handlePath";
+import {
+  RESPONSE_MESSAGES,
+  PAGE_TITLE,
+  LOCAL_STORAGE,
+  PAGE_PATH,
+} from "./constants";
 
 const handleResponse = (data, pageTitle, navigate) => {
   if (!data.msg) {
@@ -14,11 +18,9 @@ const handleResponse = (data, pageTitle, navigate) => {
     if (data.msg === "Created!") {
       alert(`${pageTitle} Success!`);
       if (pageTitle === PAGE_TITLE.REGISTER && !data.noneFirefox) {
-        const path = handlePath("USER", "LOGIN");
-        navigate(path);
+        navigate(PAGE_PATH.LOGIN);
       } else {
-        const path = handlePath("MAIN", "DASHBOARD");
-        navigate(path);
+        navigate(PAGE_PATH.HOMEPAGE);
         window.location.reload();
       }
     }

@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { NAVBAR } from "./utils/constants";
-import { handlePath } from "./utils/handlePath";
+import { PAGE_PATH } from "./utils/constants";
 import Layout from "./components/layout/Layout";
 import AddProduct from "./pages/addProduct/AddProduct";
 import Register from "./pages/registerLogin/register/Register";
@@ -10,19 +9,15 @@ import Dashboard from "./pages/dashboard/Dashboard";
 
 import "./App.css";
 
-const NAVBAR_MAIN = NAVBAR[0].MAIN;
-const NAVBAR_NEW = NAVBAR[2].NEW;
-const NAVBAR_USER = NAVBAR[3].USER;
-
 const router = createBrowserRouter([
   {
-    path: handlePath(NAVBAR_MAIN, "DASHBOARD"),
+    path: PAGE_PATH.HOMEPAGE,
     element: <Layout />,
     children: [
       { index: true, element: <Dashboard /> },
-      { path: handlePath(NAVBAR_USER, "REGISTER"), element: <Register /> },
-      { path: handlePath(NAVBAR_USER, "LOGIN"), element: <Login /> },
-      { path: handlePath(NAVBAR_NEW, "ADD_PRODUCT"), element: <AddProduct /> },
+      { path: PAGE_PATH.REGISTER, element: <Register /> },
+      { path: PAGE_PATH.LOGIN, element: <Login /> },
+      { path: PAGE_PATH.PRODUCTS.ADD, element: <AddProduct /> },
     ],
   },
 ]);
