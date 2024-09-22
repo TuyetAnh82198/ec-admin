@@ -6,6 +6,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LoginIcon from "@mui/icons-material/Login";
 
+export const LOCAL_STORAGE = {
+  TOKEN: "noneFirefox",
+};
+
 export const COLOR = {
   MAIN_GREEN: "#469E02",
   DARK_GREEN: "#3D8A00",

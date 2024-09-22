@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 
 import { StyledForm, StyledContainer } from "./styled";
-import { API } from "../../../utils/constants";
+import { API, PAGE_TITLE } from "../../../utils/constants";
 import CirProgress from "../../../components/layout/circularProgress/CircularProgress";
 import handleResponse from "../../../utils/handleResponse";
 import handleNavigate from "../../../utils/handleNavigate";
@@ -12,6 +12,7 @@ import GreenButton from "../../../components/button/GreenBtn";
 
 const Form = ({ pageTitle }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isErr, setIsErr] = useState(false);
   const [inputFields, setInputFields] = useState(["Email", "Password"]);
   const [inputs, setInputs] = useState({
     Email: "",
@@ -19,7 +20,7 @@ const Form = ({ pageTitle }) => {
   });
 
   useEffect(() => {
-    if (pageTitle === "Register") {
+    if (pageTitle === PAGE_TITLE.REGISTER) {
       setInputFields((prev) => {
         return [...prev, "Fullname", "Phone"];
       });
@@ -50,7 +51,7 @@ const Form = ({ pageTitle }) => {
     };
     const isFirefox = navigator.userAgent.includes("Firefox");
 
-    if (pageTitle === "Register") {
+    if (pageTitle === PAGE_TITLE.REGISTER) {
       body = {
         ...body,
         Fullname: inputs.Fullname,
@@ -64,7 +65,7 @@ const Form = ({ pageTitle }) => {
       headers: headers,
       body: JSON.stringify(body),
     };
-    if (pageTitle === "Login") {
+    if (pageTitle === PAGE_TITLE.LOGIN) {
       fetchObject = {
         ...fetchObject,
         headers: {
@@ -76,6 +77,7 @@ const Form = ({ pageTitle }) => {
     }
 
     setIsLoading(true);
+    setIsErr(false);
     fetch(fetchUrl, fetchObject)
       .then((response) => response.json())
       .then((data) => {
@@ -86,11 +88,14 @@ const Form = ({ pageTitle }) => {
           handleNavigate.serverErr(navigate);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsErr(true);
+      });
   };
   return (
     <>
-      {isLoading && <CirProgress />}
+      {isLoading && !isErr && <CirProgress />}
       <StyledContainer>
         <StyledForm sx={{ width: { xs: "100%", md: "40%", lg: "30%" } }}>
           <form onSubmit={submitForm}>
