@@ -6,6 +6,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LoginIcon from "@mui/icons-material/Login";
 
+export const SOCKET = {
+  PRODUCTS: {
+    TITLE: "products",
+    DELETE: "delete",
+  },
+};
+
 export const LOCAL_STORAGE = {
   TOKEN: "noneFirefox",
 };
@@ -103,11 +110,16 @@ export const NAVBAR = [
   },
 ];
 const PRODUCTS_PATH = "/products";
+const PRODUCTS_PATH_GET = `${PRODUCTS_PATH}/get`;
 const USER_PATH = "/user";
 const CART_PATH = "/cart";
 export const API = {
   PRODUCTS: {
     ADD: `${PRODUCTS_PATH}/add`,
+    GET: {
+      DETAIL: `${PRODUCTS_PATH_GET}/`,
+    },
+    DELETE: `${PRODUCTS_PATH}/delete`,
   },
   USER: {
     REGISTER: `${USER_PATH}/register`,
