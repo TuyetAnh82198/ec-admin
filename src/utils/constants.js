@@ -32,7 +32,7 @@ export const PAGE_PATH = {
     VIEW: "/products",
     ADD: "/products/add",
   },
-  // SERVER_ERROR: "/server-error",
+  SERVER_ERROR: "/server-error",
   // HISTORY: "/history",
   // HISTORY_DETAIL: "/history-detail/:id",
 };
