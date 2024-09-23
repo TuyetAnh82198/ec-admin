@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import fetchLogin from "../../utils/fetchLogin";
+import { PAGE_PATH } from "../../utils/constants";
 
 const Dashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,8 +13,7 @@ const Dashboard = () => {
         setIsLoggedIn(loggedInState);
       })
       .catch((err) => {
-        console.log(err);
-        navigate("/login");
+        navigate(PAGE_PATH.LOGIN);
       });
   }, []);
 

@@ -20,9 +20,10 @@ import {
   StyledImgContainer,
   StyledImg,
 } from "./styled";
-import { API, PAGE_TITLE } from "../../utils/constants";
+import { API, PAGE_TITLE, COLOR } from "../../utils/constants";
 import fetchLogin from "../../utils/fetchLogin";
 import handlePrice from "../../utils/handlePrice";
+import GreenButton from "../../components/button/GreenBtn";
 
 const AddProduct = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -244,16 +245,14 @@ const AddProduct = () => {
                 </StyledUploaded>
               )}
               <Box sx={{ margin: "1rem 0" }}>
-                <Button variant="text" onClick={handleReset}>
+                <Button
+                  sx={{ marginRight: "0.5rem", color: COLOR.DARK_GREEN }}
+                  variant="text"
+                  onClick={handleReset}
+                >
                   Reset
                 </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ marginLeft: "0.5rem" }}
-                >
-                  Add product
-                </Button>
+                <GreenButton type="submit" text="Add product" />
               </Box>
             </form>
           </StyledForm>
