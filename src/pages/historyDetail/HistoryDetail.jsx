@@ -24,7 +24,6 @@ const HistoryDetail = () => {
     setIsErr(false);
     fetchCart({ endpoint, method: "POST", headers, body, setIsLoading })
       .then((data) => {
-        console.log(data);
         setCart(data.cart);
       })
       .catch((err) => {

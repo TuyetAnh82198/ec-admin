@@ -12,9 +12,6 @@ const Invoices = ({ items, handleView }) => {
   const titles = [
     "ID ORDER",
     "EMAIL",
-    "NAME",
-    "PHONE",
-    "ADDRESS",
     "TOTAL",
     "DELIVERY",
     "ORDER DATE",
@@ -27,10 +24,9 @@ const Invoices = ({ items, handleView }) => {
       {items.map((item) => (
         <TableRow key={item._id}>
           <StyledCell>{item._id}</StyledCell>
-          <StyledCell>{item.user.email}</StyledCell>
-          <StyledCell>{item.user.fullName}</StyledCell>
-          <StyledCell>{item.user.phone}</StyledCell>
-          <StyledCell>{item.user.address}</StyledCell>
+          <StyledCell theme={{ textAlign: "left" }}>
+            {item.user.email}
+          </StyledCell>
           <StyledCell>{handlePrice(item.totalAmount)}đ</StyledCell>
           <StyledCell>Waiting for progressing</StyledCell>
           <StyledCell>{handleDate(item.orderDate)}</StyledCell>
