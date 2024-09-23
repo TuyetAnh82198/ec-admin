@@ -1,4 +1,4 @@
 const handlePrice = (price) => {
-  return price?.toLocaleString("en-US");
+  return price ? price.toLocaleString("en-US") : 0;
 };
 export default handlePrice;

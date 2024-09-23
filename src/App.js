@@ -8,6 +8,7 @@ import Login from "./pages/registerLogin/login/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Page404 from "./pages/404/Page404";
 import Page500 from "./pages/500/Page500";
+import HistoryDetail from "./pages/historyDetail/HistoryDetail";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: PAGE_PATH.REGISTER, element: <Register /> },
       { path: PAGE_PATH.LOGIN, element: <Login /> },
       { path: PAGE_PATH.PRODUCTS.ADD, element: <AddProduct /> },
+      { path: PAGE_PATH.HISTORY_DETAIL, element: <HistoryDetail /> },
     ],
   },
   { path: PAGE_PATH.SERVER_ERROR, element: <Page500 /> },

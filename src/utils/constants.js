@@ -33,8 +33,7 @@ export const PAGE_PATH = {
     ADD: "/products/add",
   },
   SERVER_ERROR: "/server-error",
-  // HISTORY: "/history",
-  // HISTORY_DETAIL: "/history-detail/:id",
+  HISTORY_DETAIL: "/history-detail/:id",
 };
 
 export const NAVBAR = [
@@ -105,6 +104,7 @@ export const NAVBAR = [
 ];
 const PRODUCTS_PATH = "/products";
 const USER_PATH = "/user";
+const CART_PATH = "/cart";
 export const API = {
   PRODUCTS: {
     ADD: `${PRODUCTS_PATH}/add`,
@@ -114,6 +114,10 @@ export const API = {
     LOGIN: `${USER_PATH}/login`,
     CHECK_LOGIN: `${USER_PATH}/check-login`,
     LOGOUT: `${USER_PATH}/logout`,
+  },
+  CART: {
+    GET: `${CART_PATH}/get`,
+    HISTORY_DETAIL: `${CART_PATH}/history-detail/`,
   },
 };
 
