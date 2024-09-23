@@ -20,7 +20,7 @@ import {
   StyledImgContainer,
   StyledImg,
 } from "./styled";
-import { API, PAGE_TITLE, COLOR } from "../../utils/constants";
+import { API, PAGE_TITLE, COLOR, PAGE_PATH } from "../../utils/constants";
 import fetchLogin from "../../utils/fetchLogin";
 import handlePrice from "../../utils/handlePrice";
 import GreenButton from "../../components/button/GreenBtn";
@@ -34,8 +34,7 @@ const AddProduct = () => {
         setIsLoggedIn(loggedInState);
       })
       .catch((err) => {
-        console.log(err);
-        navigate("/login");
+        navigate(PAGE_PATH.LOGIN);
       });
   }, []);
 
