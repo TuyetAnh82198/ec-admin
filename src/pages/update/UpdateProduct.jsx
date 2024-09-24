@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   TextField,
   FormControl,
@@ -20,10 +20,18 @@ import {
   StyledImgContainer,
   StyledImg,
 } from "./styled";
-import { API, PAGE_TITLE, COLOR, PAGE_PATH } from "../../utils/constants";
+import {
+  API,
+  PAGE_TITLE,
+  COLOR,
+  PAGE_PATH,
+  LOCAL_STORAGE,
+} from "../../utils/constants";
 import fetchLogin from "../../utils/fetchLogin";
 import handlePrice from "../../utils/handlePrice";
 import GreenButton from "../../components/button/GreenBtn";
+import CircularProgress from "../../components/circularProgress/CircularProgress";
+import fetchProducts from "../../utils/fetchProducts";
 
 const UpdateProduct = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +46,11 @@ const UpdateProduct = () => {
       });
   }, []);
 
+  const params = useParams();
+  const id = params.id;
+  const [endpoint, setEndpoint] = useState(API.PRODUCTS.GET.DETAIL + id + "/1");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isErr, setIsErr] = useState(false);
   const inputFields = ["Name", "Price", "Description"];
   const [inputErrs, setInputErrs] = useState(
     Array(inputFields.length).fill({ helperText: "", isErr: false })
@@ -51,6 +64,33 @@ const UpdateProduct = () => {
     Description: "",
   });
   const imgInput = useRef();
+  const [isUpImgRequired, setIsUpImgRequired] = useState(true);
+
+  const fetchPd = useCallback(() => {
+    return fetchProducts(endpoint, setIsLoading);
+  }, [endpoint]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIsErr(false);
+    fetchPd()
+      .then((data) => {
+        const product = data.products;
+        setInputs({
+          Name: product.name,
+          Price: product.price,
+          Description: product.desc,
+        });
+        setSelectedBrand(product.brand);
+        setImageURLs(
+          product.imgs.map((path) => process.env.REACT_APP_SERVER + "/" + path)
+        );
+        setIsUpImgRequired(false);
+      })
+      .catch((err) => {
+        setIsErr(true);
+      });
+  }, []);
 
   const formatPrice = (value) => {
     const number = parseInt(value.replace(/[^\d]/g, ""));
@@ -119,6 +159,7 @@ const UpdateProduct = () => {
     imgInput.current.value = "";
     imgInput.current.files = null;
     setImageURLs([]);
+    setIsUpImgRequired(true);
   };
 
   const submitForm = (e) => {
@@ -145,14 +186,17 @@ const UpdateProduct = () => {
       formData.append("Price", Price);
       formData.append("Description", Description);
       formData.append("Brand", selectedBrand);
-      for (let i = 0; i < 3; i++) {
-        if (imgInput.current.files[i]) {
-          formData.append("imgs", imgInput.current.files[i], `file${i}`);
-        } else {
-          break;
+      formData.append("token", localStorage.getItem(LOCAL_STORAGE.TOKEN));
+      if (imgInput.current.files[0]) {
+        for (let i = 0; i < 3; i++) {
+          if (imgInput.current.files[i]) {
+            formData.append("imgs", imgInput.current.files[i], `file${i}`);
+          } else {
+            break;
+          }
         }
       }
-      const fetchUrl = process.env.REACT_APP_SERVER + API.PRODUCTS.ADD;
+      const fetchUrl = process.env.REACT_APP_SERVER + API.PRODUCTS.UPDATE + id;
       const fetchObject = {
         method: "POST",
         credentials: "include",
@@ -162,9 +206,9 @@ const UpdateProduct = () => {
         .then((response) => response.json())
         .then((data) => {
           if (!data.err) {
-            if (data.msg === "Added!") {
-              alert("Added!");
-              handleReset();
+            if (data.msg === "Updated!") {
+              alert("Updated!");
+              navigate(PAGE_PATH.PRODUCTS.VIEW);
             }
           } else {
             navigate("/server-error");
@@ -180,7 +224,10 @@ const UpdateProduct = () => {
         <StyledContainer>
           <StyledForm sx={{ width: { xs: "100%", md: "40%" } }}>
             <form onSubmit={submitForm} encType="multipart/form-data">
-              <h3>{PAGE_TITLE.ADD}</h3>
+              <Box display="flex">
+                <h3>{PAGE_TITLE.UPDATE}</h3>
+                {isLoading && !isErr && <CircularProgress />}
+              </Box>
               {inputFields.map((field, i) => (
                 <TextField
                   key={i}
@@ -208,7 +255,7 @@ const UpdateProduct = () => {
                       multiple
                       name="imgs"
                       onChange={handleUpload}
-                      required
+                      required={isUpImgRequired}
                       ref={imgInput}
                     />
                     <FormHelperText>

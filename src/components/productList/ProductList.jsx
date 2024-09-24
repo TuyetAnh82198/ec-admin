@@ -16,7 +16,7 @@ import { StyledCell, StyledImg } from "./styled";
 import handlePrice from "../../utils/handlePrice";
 import { COLOR } from "../../utils/constants";
 
-const ProductList = ({ products, handleDelete, handleCheck }) => {
+const ProductList = ({ products, handleUpdate, handleDelete, handleCheck }) => {
   const titles = [
     "REMOVE MANY",
     "IMAGE",
@@ -66,7 +66,7 @@ const ProductList = ({ products, handleDelete, handleCheck }) => {
                 <StyledCell>{p.brand}</StyledCell>
                 <StyledCell>{p.stock}</StyledCell>
                 <StyledCell sx={styledBtn("edit")}>
-                  <EditIcon onClick={() => handleDelete({ id: p._id })} />
+                  <EditIcon onClick={() => handleUpdate(p._id)} />
                 </StyledCell>
                 <StyledCell sx={styledBtn("delete")}>
                   <DeleteIcon onClick={() => handleDelete({ id: p._id })} />
@@ -82,6 +82,7 @@ const ProductList = ({ products, handleDelete, handleCheck }) => {
 
 ProductList.propTypes = {
   products: PropTypes.array,
+  handleUpdate: PropTypes.func,
   handleDelete: PropTypes.func,
   handleCheck: PropTypes.func,
 };

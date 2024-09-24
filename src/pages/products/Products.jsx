@@ -92,6 +92,10 @@ const Products = () => {
     }
   };
 
+  const handleUpdate = (id) => {
+    navigate(PAGE_PATH.PRODUCTS.UPDATE.slice(0, -3) + id);
+  };
+
   const handleDelete = ({ ids, id }) => {
     const isConfirm = window.confirm("Are you sure?");
     if (!isConfirm) {
@@ -148,6 +152,7 @@ const Products = () => {
               <ProductList
                 products={products}
                 handleCheck={handleCheck}
+                handleUpdate={handleUpdate}
                 handleDelete={handleDelete}
               />
             </Box>

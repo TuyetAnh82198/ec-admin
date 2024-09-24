@@ -38,6 +38,7 @@ export const PAGE_PATH = {
   PRODUCTS: {
     VIEW: "/products",
     ADD: "/products/add",
+    UPDATE: "/products/update/:id",
   },
   SERVER_ERROR: "/server-error",
   HISTORY_DETAIL: "/history-detail/:id",
@@ -120,6 +121,7 @@ export const API = {
       DETAIL: `${PRODUCTS_PATH_GET}/`,
     },
     DELETE: `${PRODUCTS_PATH}/delete`,
+    UPDATE: `${PRODUCTS_PATH}/update/`,
   },
   USER: {
     REGISTER: `${USER_PATH}/register`,
