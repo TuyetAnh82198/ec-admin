@@ -11,6 +11,19 @@ export const SOCKET = {
     TITLE: "products",
     DELETE: "delete",
   },
+  CHAT: {
+    ROOMS: "rooms",
+    JOIN_ROOM: "joinRoom",
+    ROOM_CREATED: "roomCreated",
+    INFOR: { SENDER: "sender", DATE_TIME: "dateTime", CONTENT: "content" },
+    SENDER: { ADMIN: "admin", CLIENT: "client" },
+    SEND: { EMIT: "frontend send messages" },
+    RECEIVE: {
+      FROM_SERVER: "server send messages",
+      END_CHAT: "server send roomId to end chat",
+    },
+    ERROR: "connect_error",
+  },
 };
 
 export const LOCAL_STORAGE = {
@@ -20,6 +33,8 @@ export const LOCAL_STORAGE = {
 export const COLOR = {
   MAIN_GREEN: "#469E02",
   DARK_GREEN: "#3D8A00",
+  PINK: "#cf4965",
+  LIGHT_GRAY: "#f8f9fa",
 };
 
 export const PAGE_TITLE = {

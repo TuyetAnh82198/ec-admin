@@ -11,6 +11,7 @@ import Page500 from "./pages/500/Page500";
 import HistoryDetail from "./pages/historyDetail/HistoryDetail";
 import Products from "./pages/products/Products";
 import UpdateProduct from "./pages/update/UpdateProduct";
+import Chat from "./pages/chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: PAGE_PATH.HISTORY_DETAIL, element: <HistoryDetail /> },
       { path: PAGE_PATH.PRODUCTS.VIEW, element: <Products /> },
       { path: PAGE_PATH.PRODUCTS.UPDATE, element: <UpdateProduct /> },
+      { path: PAGE_PATH.CHAT, element: <Chat /> },
     ],
   },
   { path: PAGE_PATH.SERVER_ERROR, element: <Page500 /> },
