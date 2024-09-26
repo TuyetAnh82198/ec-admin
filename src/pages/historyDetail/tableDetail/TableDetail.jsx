@@ -14,7 +14,7 @@ const TableDetail = ({ products }) => {
           <StyledCell>{p.productId._id}</StyledCell>
           <StyledCell>
             <img
-              style={{ width: "65%" }}
+              style={{ width: "5rem" }}
               src={process.env.REACT_APP_SERVER + "/" + p.productId.imgs[0]}
               alt=""
             />
