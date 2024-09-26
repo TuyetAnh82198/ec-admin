@@ -25,7 +25,7 @@ Chat.
 Page 404, 500.
 
 [Demo]
--> Client: (Account: tuyetanh14102023@gmail.com; Pass: 12345678)
+-> Client: (Account: tuyetanh14102023@gmail.com; Pass: 12345678; Test_Payment_Card_Number: 4242 4242 4242 4242)
 https://ec-web-client.onrender.com
 -> Admin: (Account: admin@gmail.com; Pass: 12345678)
 https://ec-web-admin.onrender.com
@@ -37,7 +37,7 @@ npm start
 .env: REACT_APP_SERVER, REACT_APP_CLIENT, REACT_APP_GOOGLE_CLIENT_ID, REACT_APP_STRIPE_PUBLIC_KEY
 -> Admin:
 npm start
-.env: REACT_APP_SERVER, REACT_APP_ADMIN=http://localhost:3001
+.env: REACT_APP_SERVER, REACT_APP_ADMIN
 -> Server:
 "start": "nodemon --env-file=.env app.js"
 npm start
