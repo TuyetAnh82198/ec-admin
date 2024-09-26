@@ -17,6 +17,7 @@ An email will be sent to user successfully registered.
 CRUD.
 Sort.
 Search.
+Filter.
 Pagination.
 Automatically apply free shipping code to eligible orders.
 Updating stock.
